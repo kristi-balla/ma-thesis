@@ -1,0 +1,78 @@
+gateway:
+  enabled: true
+
+chunksCache:
+  enabled: false
+
+resultsCache:
+  enabled: false
+
+loki:
+  auth_enabled: false
+  commonConfig:
+    # Single-replica Loki
+    replication_factor: 1
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: filesystem
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  storage:
+    type: filesystem
+  limits_config:
+    retention_period: 168h # 7 days retention
+deploymentMode: SingleBinary
+singleBinary:
+  replicas: 1
+read:
+  replicas: 0
+write:
+  replicas: 0
+backend:
+  replicas: 0
+# promtail:
+#   enabled: true
+#   config:
+#     clients:
+#       - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+
+#     scrape_configs:
+#       - job_name: kubernetes-pods
+#         pipeline_stages:
+#           - cri: {} # parse kubernetes container format
+#           - json:
+#               expressions:
+#                 inner: log # outer object has "log": "<json-string>\n"
+#           - json:
+#               source: inner # parse the inner JSON string
+#               expressions:
+#                 x_request_id: x_request_id
+#                 method: method
+#                 path: path
+#                 response_code: response_code
+#                 user_agent: user_agent
+#           - labels:
+#               x_request_id
+#               # below labels come from relabeling (see relabel_configs)
+#         kubernetes_sd_configs:
+#           - role: pod
+
+#         relabel_configs:
+#           # map k8s metadata to labels with EXACT SAME NAMES as OTel created
+#           - source_labels: [__meta_kubernetes_pod_name]
+#             target_label: k8s_pod_name
+#           - source_labels: [__meta_kubernetes_namespace]
+#             target_label: namespace
+#           # common pod labels; try these (choose one that you set on your pods)
+#           - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+#             target_label: service_name
+#             regex: (.+)
+#             action: replace
+#           # fallback: use container name if no app label available
+#           - source_labels: [__meta_kubernetes_pod_container_name]
+#             target_label: service_name
+#             action: replace

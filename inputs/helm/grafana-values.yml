@@ -1,0 +1,35 @@
+alertmanager:
+  enabled: false
+
+## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+##
+grafana:
+  enabled: true
+  ## Timezone for the default dashboards
+  ## Other options are: browser or a specific timezone, i.e. Europe/Luxembourg
+  ##
+  defaultDashboardsTimezone: browser
+
+  # Administrator credentials when not using an existing secret (see below)
+  adminUser: admin
+  adminPassword: admin
+
+  ## Configure additional grafana datasources (passed through tpl)
+  ## ref: https://grafana.com/docs/grafana/latest/administration/provisioning/#datasources
+  additionalDataSources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      url: http://kps-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+      isDefault: false
+    - name: Loki
+      type: loki
+      access: proxy
+      isDefault: false
+      url: http://loki.monitoring.svc.cluster.local:3100
+    - name: Tempo
+      type: tempo
+      access: proxy
+      url: http://tempo.monitoring.svc.cluster.local:3200
+      isDefault: false
+      basicAuth: false
