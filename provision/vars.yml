@@ -12,7 +12,6 @@ versions:
   cri_dockerd: 0.3.21
   open5gs_chart: 2.3.3
   ueransim_gnb_chart: 0.2.6
-  istio: 1.28.0
 
 docker_users:
   - "vagrant"
@@ -70,11 +69,6 @@ zips:
     unpack_dir: "/tmp"
     tool_path: "/tmp/cri-dockerd/cri-dockerd"
     binary: "cri-dockerd"
-  - url: "https://github.com/istio/istio/releases/download/{{ versions.istio }}/istio-{{ versions.istio }}-linux-amd64.tar.gz"
-    dest: "/tmp/istio-{{ versions.istio }}-linux-amd64.tar.gz"
-    unpack_dir: /tmp
-    tool_path: /tmp/istio-{{ versions.istio }}/bin/istioctl
-    binary: istioctl
 
 helm_packages:
   - name: open5gs
