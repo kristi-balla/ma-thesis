@@ -11,6 +11,10 @@ smf:
   config:
     pcrf:
       enabled: false
+  metrics:
+    server:
+      - address: "0.0.0.0"
+        port: 9090
 
 sgwc:
   enabled: false
@@ -39,6 +43,10 @@ amf:
         s_nssai:
           - sst: 1
             sd: "0x111111"
+  metrics:
+    server:
+      - address: "0.0.0.0"
+        port: 9090
 
 nssf:
   config:
@@ -46,6 +54,12 @@ nssf:
       - uri: ""
         sst: 1
         sd: "0x111111"
+
+upf:
+  metrics:
+    server:
+      - address: "0.0.0.0"
+        port: 9090
 
 webui:
   ingress:

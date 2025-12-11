@@ -27,3 +27,31 @@ grafana:
       access: proxy
       isDefault: false
       url: http://loki.monitoring.svc.cluster.local:3100
+
+  dashboardsProvider:
+    enabled: true
+    providers:
+      - name: "open5gs"
+        orgId: 1
+        folder: ""
+        type: file
+        disableDeletion: false
+        editable: true
+        updateIntervalSeconds: 5
+        options:
+          path: /var/lib/grafana/dashboards/open5gs
+
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+      folder: /var/lib/grafana/dashboards
+
+prometheus:
+  prometheusSpec:
+    # i am too lazy for label filtering, so I just let prometheus discover
+    # every service monitor in its namespace
+    serviceMonitorSelectorNilUsesHelmValues: false
+# TODO: figure out how to configure 5G application. Main goal is to build something configurable!
+# can also have something behind the 5g netw that generates traffic!

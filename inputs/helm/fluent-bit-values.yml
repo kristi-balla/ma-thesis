@@ -25,11 +25,11 @@ config:
         Labels On
         Annotations Off
 
-    # ONLY logs from default namespace
+    # ONLY logs from open5gs namespace
     [FILTER]
         Name grep
         Match kube.*
-        Regex kubernetes['namespace_name'] ^default$
+        Regex kubernetes['namespace_name'] ^open5gs$
 
     # Normalize fields
     [FILTER]

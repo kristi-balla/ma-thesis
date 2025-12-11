@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "debian/bookworm64"
+  config.vm.box = "ubuntu/jammy64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -66,7 +66,7 @@ Vagrant.configure("2") do |config|
     vb.gui = false
   
     # Customize the amount of memory on the VM:
-    vb.memory = "10000"
+    vb.memory = "9000"
     vb.cpus = 6
   end
   #
@@ -83,9 +83,4 @@ Vagrant.configure("2") do |config|
     sudo resize2fs /dev/sda1
     lsblk
   SHELL
-
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "./provision/playbook.yml"
-    ansible.config_file = "./provision/ansible.cfg"
-  end
 end

@@ -37,14 +37,14 @@
         state: started
         daemon_reload: true
 
-    - name: Add specified users to docker group
+    - name: Add specified users to specified group
       become: true
       ansible.builtin.user:
-        name: "{{ item }}"
-        groups: docker
+        name: "{{ item.user }}"
+        groups: "{{ item.group }}"
         append: true
-      loop: "{{ docker_users }}"
-      when: docker_users is defined
+      loop: "{{ users_and_groups }}"
+      when: users_and_groups is defined
 
     - name: Ensure dir exists
       become: true

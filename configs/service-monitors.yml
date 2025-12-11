@@ -1,0 +1,56 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: open5gs-amf
+  namespace: monitoring
+  labels:
+    release: kps
+spec:
+  selector:
+    matchLabels:
+      nf: amf
+  namespaceSelector:
+    matchNames:
+      - open5gs
+  endpoints:
+    - port: metrics
+      interval: 5s
+      scheme: http
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: open5gs-smf
+  namespace: monitoring
+  labels:
+    release: kps
+spec:
+  selector:
+    matchLabels:
+      nf: smf
+  namespaceSelector:
+    matchNames:
+      - open5gs
+  endpoints:
+    - port: metrics
+      interval: 5s
+      scheme: http
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: open5gs-upf
+  namespace: monitoring
+  labels:
+    release: kps
+spec:
+  selector:
+    matchLabels:
+      nf: upf
+  namespaceSelector:
+    matchNames:
+      - open5gs
+  endpoints:
+    - port: metrics
+      interval: 5s
+      scheme: http

@@ -1,0 +1,216 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open5gs-dashboards
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  open5gs-overview.json: |
+    {
+      "title": "Open5GS Overview",
+      "tags": ["open5gs","5gc"],
+      "timezone": "browser",
+      "schemaVersion": 38,
+      "version": 1,
+      "refresh": "30s",
+      "time": { "from": "now-6h", "to": "now" },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "AMF UE Count",
+          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 0},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"],"fields":"","values":false}},
+          "targets": [
+            { "expr": "sum(amf_ue_count)", "legendFormat": "UEs", "refId": "A" }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "SMF PDU Sessions",
+          "gridPos": {"h": 4,"w": 6,"x": 6,"y": 0},
+          "targets": [
+            { "expr": "sum(smf_pdu_session_count)", "legendFormat": "Sessions", "refId": "A" }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "UPF PFCP Sessions",
+          "gridPos": {"h": 4,"w": 6,"x": 12,"y": 0},
+          "targets": [
+            { "expr": "sum(upf_pfcp_session_count)", "legendFormat": "PFCP", "refId": "A" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "UPF GTP-U Throughput",
+          "gridPos": {"h": 7,"w": 12,"x": 0,"y": 4},
+          "fieldConfig": { "defaults": {"unit": "bps"} },
+          "targets": [
+            { "expr": "sum(rate(upf_gtpu_bytes_total[5m]))", "legendFormat": "Total", "refId": "A" },
+            { "expr": "sum(rate(upf_gtpu_rx_bytes_total[5m]))", "legendFormat": "RX", "refId": "B" },
+            { "expr": "sum(rate(upf_gtpu_tx_bytes_total[5m]))", "legendFormat": "TX", "refId": "C" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "SBI Request Rate (All NFs)",
+          "gridPos": {"h": 7,"w": 12,"x": 12,"y": 4},
+          "targets": [
+            { "expr": "sum(rate(sbi_requests_total[5m]))", "legendFormat": "req/s", "refId": "A" }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Registered NFs (NRF)",
+          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 11},
+          "targets": [
+            { "expr": "sum(nrf_registered_nf_count)", "legendFormat": "NFs", "refId": "A" }
+          ]
+        },
+        {
+          "type": "gauge",
+          "title": "AMF NGAP Connections",
+          "gridPos": {"h": 4,"w": 6,"x": 6,"y": 11},
+          "targets": [
+            { "expr": "sum(amf_ngap_connections)", "legendFormat": "NGAP", "refId": "A" }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "SBI Errors (5xx)",
+          "gridPos": {"h": 4,"w": 6,"x": 12,"y": 11},
+          "targets": [
+            { "expr": "sum(rate(sbi_responses_total{code=~\"5..\"}[5m]))", "legendFormat": "errors/s", "refId": "A" }
+          ]
+        }
+      ]
+    }
+  amf-detail.json: |
+    {
+      "title": "Open5GS AMF Detail",
+      "tags": ["open5gs","amf"],
+      "schemaVersion": 38,
+      "version": 1,
+      "refresh": "30s",
+      "time": { "from": "now-6h", "to": "now" },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "UE Count",
+          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 0},
+          "targets": [{ "expr": "sum(amf_ue_count)", "refId": "A" }]
+        },
+        {
+          "type": "timeseries",
+          "title": "Registration Attempts/Success",
+          "gridPos": {"h": 7,"w": 12,"x": 6,"y": 0},
+          "targets": [
+            { "expr": "sum(rate(amf_registration_attempts_total[5m]))", "legendFormat": "attempts", "refId": "A" },
+            { "expr": "sum(rate(amf_registration_success_total[5m]))", "legendFormat": "success", "refId": "B" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "SBI Latency (p95)",
+          "gridPos": {"h": 7,"w": 12,"x": 0,"y": 7},
+          "fieldConfig": { "defaults": {"unit": "ms"} },
+          "targets": [
+            { "expr": "histogram_quantile(0.95, sum by (le) (rate(amf_sbi_request_latency_seconds_bucket[5m])))", "legendFormat": "p95", "refId": "A" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "NGAP Connections",
+          "gridPos": {"h": 7,"w": 12,"x": 12,"y": 7},
+          "targets": [{ "expr": "sum(amf_ngap_connections)", "refId": "A" }]
+        }
+      ]
+    }
+  smf-detail.json: |
+    {
+      "title": "Open5GS SMF Detail",
+      "tags": ["open5gs","smf"],
+      "schemaVersion": 38,
+      "version": 1,
+      "refresh": "30s",
+      "time": { "from": "now-6h", "to": "now" },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "PDU Session Count",
+          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 0},
+          "targets": [{ "expr": "sum(smf_pdu_session_count)", "refId": "A" }]
+        },
+        {
+          "type": "timeseries",
+          "title": "SBI Request Rate",
+          "gridPos": {"h": 7,"w": 12,"x": 6,"y": 0},
+          "targets": [{ "expr": "sum(rate(smf_sbi_requests_total[5m]))", "legendFormat": "req/s", "refId": "A" }]
+        },
+        {
+          "type": "timeseries",
+          "title": "SBI Errors (4xx/5xx)",
+          "gridPos": {"h": 7,"w": 12,"x": 0,"y": 7},
+          "targets": [
+            { "expr": "sum(rate(smf_sbi_responses_total{code=~\"4..\"}[5m]))", "legendFormat": "4xx", "refId": "A" },
+            { "expr": "sum(rate(smf_sbi_responses_total{code=~\"5..\"}[5m]))", "legendFormat": "5xx", "refId": "B" }
+          ]
+        }
+      ]
+    }
+  upf-detail.json: |
+    {
+      "title": "Open5GS UPF Detail",
+      "tags": ["open5gs","upf"],
+      "schemaVersion": 38,
+      "version": 1,
+      "refresh": "15s",
+      "time": { "from": "now-1h", "to": "now" },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "PFCP Session Count",
+          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 0},
+          "targets": [{ "expr": "sum(upf_pfcp_session_count)", "refId": "A" }]
+        },
+        {
+          "type": "timeseries",
+          "title": "GTP-U Throughput",
+          "gridPos": {"h": 8,"w": 12,"x": 6,"y": 0},
+          "fieldConfig": { "defaults": {"unit": "bps"} },
+          "targets": [
+            { "expr": "sum(rate(upf_gtpu_bytes_total[1m]))", "legendFormat": "Total", "refId": "A" },
+            { "expr": "sum(rate(upf_gtpu_rx_bytes_total[1m]))", "legendFormat": "RX", "refId": "B" },
+            { "expr": "sum(rate(upf_gtpu_tx_bytes_total[1m]))", "legendFormat": "TX", "refId": "C" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Packets (RX/TX)",
+          "gridPos": {"h": 8,"w": 12,"x": 0,"y": 8},
+          "targets": [
+            { "expr": "sum(rate(upf_gtpu_rx_packets_total[1m]))", "legendFormat": "RX pkts/s", "refId": "A" },
+            { "expr": "sum(rate(upf_gtpu_tx_packets_total[1m]))", "legendFormat": "TX pkts/s", "refId": "B" }
+          ]
+        }
+      ]
+    }
+  logs.json: |
+    {
+      "title": "Open5GS Logs",
+      "tags": ["open5gs","logs"],
+      "schemaVersion": 38,
+      "version": 1,
+      "panels": [
+        {
+          "type": "logs",
+          "title": "Namespace default pods (Open5GS)",
+          "gridPos": {"h": 15,"w": 24,"x": 0,"y": 0},
+          "targets": [
+            { "refId": "A", "datasource": { "type": "loki", "uid": "Loki" },
+              "query": "{namespace=\"default\"} |= \"open5gs\"" }
+          ]
+        }
+      ]
+    }
