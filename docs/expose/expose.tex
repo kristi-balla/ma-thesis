@@ -1,0 +1,179 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.21 of 2022/01/12
+%
+\documentclass[runningheads]{llncs}
+%
+\usepackage[T1]{fontenc}
+% T1 fonts will be used to generate the final print and online PDFs,
+% so please use T1 fonts in your manuscript whenever possible.
+% Other font encondings may result in incorrect characters.
+%
+\usepackage{graphicx}
+\usepackage{hyperref}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following two lines
+% to display URLs in blue roman font according to Springer's eBook style:
+% \usepackage{color}
+% \renewcommand\UrlFont{\color{blue}\rmfamily}
+% \urlstyle{rm}
+
+\usepackage{pgfgantt}     % for Gantt charts
+\usepackage{lmodern}      % better font rendering
+\usepackage[a4paper, margin=3cm]{geometry}
+\usepackage{xcolor}
+
+% Optional: custom colors
+\definecolor{taskblue}{RGB}{66,133,244}
+\definecolor{milestonecolor}{RGB}{234,67,53}
+%
+%
+\begin{document}
+%
+\newcommand{\ks}{Kubernetes}
+%
+\title{Learning from Failures: AI-driven Automated Root Cause Analysis in Cloud-Native Systems}
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{Kristi Balla\inst{1}\orcidID{0009-0009-8610-062X}}
+%
+\authorrunning{Kristi Balla Thesis Proposal}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{Chair of Communication Networks\\
+School of Computation, Information and Technology\\
+Technical University of Munich\\
+\email{kristi.balla@tum.de}}
+%
+\maketitle              % typeset the header of the contribution
+%
+%
+%
+%
+\section{Overview} 
+
+% 1. what are cloud native systems?
+Cloud-native systems consist of loosely coupled microservices \cite{kratzke2017understanding}.  
+They are deployed on container orchestration platforms such as \ks. 
+Such systems have become the backbone of modern software infrastructures \cite{cloud_native}. 
+This is due to their advantages such as flexibility, scalability, and rapid deployments. 
+% 2. mention what can be deployed in cloud-native: among them are 5G systems! 
+Such advantages were also recognized by 5G network systems.
+The core of these networks was designed to be cloud-native. 
+Thus network functions (NFs) are now containerized \cite{3gpp_ts_23501_rel18}. 
+% 3. what are the disadvantages
+However, the shift introduces operational challenges \cite{shamim2022benefits,opscruisek8s,spivsakova2022using}. 
+Troubleshooting unexpected behavior includes reading through application logs, looking up deployment metrics or tracing a request across multiple services \cite{poulton2019kubernetes}. 
+Processing the distributed data can take a significant amount of time and be error-prone. 
+This calls for an automatic solution, or Automatic Root Cause Analysis (ARCA).
+
+% mention that AI can help with parsing large amounts of information
+Large language models (LLMs) are particularly good at dealing with big amounts of text \cite{naveed2025comprehensive}. There are many free models to choose from, all focusing on different kinds of tasks. However, since they were trained on generic data \cite{kasneci2023chatgpt}, they usually lack the context to understand the relationships of different NFs in a 5G setting.
+
+% state your research questions you want to explore in this thesis
+% smth smth which open-source model is most correct when pinpointing issues
+% smth smth which model can properly explain why they came to that conclusion
+Thus, this thesis focuses using LLMs for ARCA of anomalies that occur in cloud-native systems, focusing on a 5G core implementation. The following research questions will be answered:
+
+\begin{description}
+    \item[Q1] Can chaos engineering be leveraged to improve the accuracy of LLMs when used for ARCA?
+    \item[Q2] How does the quantity of contextual input affect the output quality of LLMs?
+    \item[Q3] Which model is most reliable for explaining the clues that led to its decision?
+\end{description}
+
+\section{Goals}
+% TODO: restructure to mention 5G and that you're focusing more on the application and the services themselves than the k8s backbone
+% this is the objectives part Boyan spoke of
+To answer the research questions, the following milestones need to be achieved.
+
+% you want to firstly create an observable application following the 3 pillars of observability
+First, a cluster with an appropriate log sink. Logs are to be enriched with other \ks\space metadata. The result will be used to define the stable state of the cluster.
+
+% then a stable state definition for chaos engineering --> create the chaos and label it
+% for that, you'll have to think about some attack scenarios!!
+Second, a definition of attack scenarios. Those will be used to engineer chaos into the cluster and have it diverge from its stable state. The chaos faults will focus on the application itself, as well as the underlying infrastructure. They aim to disrupt the normal flow of NFs and induce a large number of failures. The observed behavior will be fed into the LLMs for the next step.
+
+% throw SVM/forest classifier at it to initially say if there is a problem at all
+% then baseline AI with a very naive prompt
+% then do some prompt engineering for different open-source models
+% then do RAG for efficiency
+Third, a baseline for LLM response accuracy. For this, the LLMs shall initially be naively prompted. The baseline includes metrics such as accuracy, precision, recall, F1, human agreement score, and faithfulness. Then, more advanced prompt engineering will be investigated. In addition, older, potentially synthetic precedents could help LLMs make a more informed decision. Thus, retrieval augmented generation (RAG) will also be examined.
+
+% project should be presented as a one-click-solution: just plug it in your cluster and hit detect or smth
+Optionally, the work should be presented as a one-click solution. The implementation could include a GUI or a chatbot, depending on the amount of time left.
+
+\section{Experimental Setup}
+% TODO: mention tools for chaos engineering!
+% Mention you'll spin up a cluster on (chair infra, AWS, Azure, GCP, Telekom Infra) and run your experiments against it
+This work foresees reproducibly spinning up multi-node \ks\space clusters to generate the data. Since AI workloads are intended, at least a machine with GPU access is required. The data from logs will be collected for further processing. This includes correlation and labeling. Then, a request will be made to the model running in \href{https://ollama.com/search}{Ollama}. The models for this thesis will be hand-picked from there.
+
+The application to be deployed is \href{https://open5gs.org/}{Open5Gs}. This was chosen due to its straight-forward setup guide, extensive documentation, as well as high configurability. \href{https://fluentbit.io/}{FluentBit} will parse application logs and send them to a \href{https://grafana.com/docs/loki/latest/}{Loki} backend. \href{https://prometheus.io/}{Prometheus} will scrape service metrics and \href{https://grafana.com/}{Grafana} will display all this information in a dashboard. \href{https://docs.litmuschaos.io/}{Litmus Chaos} will be used to inject errors.
+
+\section{Timeline}
+
+Figure \ref{fig:gantt-chart} depicts a proposed timeline for this thesis, aiming to start on 01.02. and be submitted on 01.08.. While task duration was estimated generously, there still is a buffer of one week for unforeseen circumstances. 38 days were allocated to writing the thesis itself. However, writing will be a continuous process occurring after each milestone to guarantee short feedback loops.
+
+\begin{figure}[!h]
+    \centering
+    \makebox[\textwidth][c]{
+        \begin{ganttchart}[
+            y unit chart=0.5cm,
+            time slot format=isodate,
+            time slot unit=day,
+            vgrid={draw=none,draw=none,dashed,*{4}{draw=none}},
+            vgrid style/.style={draw=gray!30},
+            milestone/.append style={fill=milestonecolor!80}, 
+            bar/.append style={fill=taskblue!70},
+            title/.append style={fill=gray!10},
+            expand chart=1.2\textwidth
+        ]{2026-01-22}{2026-08-11}
+            \gantttitlecalendar{month=shortname} \\
+            % --- Tasks ---
+            % 3w
+            \ganttbar{Setup observable application}{2026-02-01}{2026-02-21} \\
+            % 3w
+            \ganttbar{Research related works}{2026-02-07}{2026-02-28} \\
+            % 38d
+            \ganttbar{Define chaos experiments}{2026-03-01}{2026-04-07}
+            \ganttmilestone{}{2026-04-07} \\
+            % 3w
+            \ganttbar{Setup Ollama backend}{2026-04-08}{2026-04-28} \\
+            % 2w
+            \ganttbar{Calculate baseline}{2026-04-29}{2026-05-13}
+            \ganttmilestone{}{2026-05-13} \\
+            % 3w
+            \ganttbar{Prompt engineering}{2026-05-14}{2026-06-04} \\
+            % 38d
+            \ganttbar{RAG pipeline}{2026-06-05}{2026-07-13}
+            \ganttmilestone{}{2026-07-13} \\
+            % 1w
+            \ganttbar{Develop 1-click solution}{2026-07-14}{2026-07-21}
+            \ganttmilestone{}{2026-07-21} \\
+            % 38d
+            \ganttbar{Writing}{2026-06-15}{2026-07-23}\\
+            % 1w
+            \ganttbar{Buffer / Review}{2026-07-23}{2026-08-01}
+        \end{ganttchart}
+    }
+    \caption{Proposed timeline for the thesis. The vertical grid-lines are one week apart from each-other.}
+    \label{fig:gantt-chart}
+\end{figure}
+
+% TODO: academic language, NOT casual
+
+%
+% ---- Bibliography ----
+%
+% BibTeX users should specify bibliography style 'splncs04'.
+% References will then be sorted and formatted in the correct style.
+%
+\bibliographystyle{splncs04}
+\bibliography{mybibliography}
+%
+\end{document}
