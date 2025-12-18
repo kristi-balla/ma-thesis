@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
+  # when starting fresh, use myboxes/box
   config.vm.box = "ubuntu/jammy64"
 
   # Disable automatic box update checking. If you disable this, then

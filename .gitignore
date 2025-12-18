@@ -209,3 +209,16 @@ __marimo__/
 # dot folders
 .ansible/
 .vagrant/
+
+# current vagrant boxes
+myboxes/
+
+# latex bs
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.pdf
+*.out
+*.synctex.gz

@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: open5gs-amf
-  namespace: monitoring
+  namespace: open5gs
   labels:
     release: kps
 spec:
@@ -15,13 +15,15 @@ spec:
   endpoints:
     - port: metrics
       interval: 5s
-      scheme: http
+  # the service doesn't send a Content-Type when replying
+  # so fall back to assuming text/plain (which it is)
+  fallbackScrapeProtocol: "PrometheusText0.0.4"
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: open5gs-smf
-  namespace: monitoring
+  namespace: open5gs
   labels:
     release: kps
 spec:
@@ -34,23 +36,6 @@ spec:
   endpoints:
     - port: metrics
       interval: 5s
-      scheme: http
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: open5gs-upf
-  namespace: monitoring
-  labels:
-    release: kps
-spec:
-  selector:
-    matchLabels:
-      nf: upf
-  namespaceSelector:
-    matchNames:
-      - open5gs
-  endpoints:
-    - port: metrics
-      interval: 5s
-      scheme: http
+  # the service doesn't send a Content-Type when replying
+  # so fall back to assuming text/plain (which it is)
+  fallbackScrapeProtocol: "PrometheusText0.0.4"

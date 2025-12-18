@@ -8,209 +8,1155 @@ metadata:
 data:
   open5gs-overview.json: |
     {
-      "title": "Open5GS Overview",
-      "tags": ["open5gs","5gc"],
-      "timezone": "browser",
-      "schemaVersion": 38,
-      "version": 1,
-      "refresh": "30s",
-      "time": { "from": "now-6h", "to": "now" },
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 21,
+      "links": [],
       "panels": [
         {
-          "type": "stat",
-          "title": "AMF UE Count",
-          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 0},
-          "options": {"reduceOptions":{"calcs":["lastNotNull"],"fields":"","values":false}},
-          "targets": [
-            { "expr": "sum(amf_ue_count)", "legendFormat": "UEs", "refId": "A" }
-          ]
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 10,
+          "panels": [],
+          "title": "Process Health",
+          "type": "row"
         },
         {
-          "type": "stat",
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 1
+          },
+          "id": 12,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.3.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "process_resident_memory_bytes / (1024 * 1024)",
+              "legendFormat": "",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Overall Memory (MiB)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 1
+          },
+          "id": 11,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.3.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "process_cpu_seconds_total",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "AMF CPU (s)",
+          "type": "timeseries"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 10
+          },
+          "id": 1,
+          "panels": [],
+          "title": "Core Overview",
+          "type": "row"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 6,
+            "x": 0,
+            "y": 11
+          },
+          "id": 2,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "12.3.0",
+          "targets": [
+            {
+              "expr": "amf_session",
+              "legendFormat": "AMF",
+              "refId": "A"
+            }
+          ],
+          "title": "AMF Sessions",
+          "type": "stat"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 6,
+            "x": 6,
+            "y": 11
+          },
+          "id": 3,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "12.3.0",
+          "targets": [
+            {
+              "expr": "fivegs_smffunction_sm_sessionnbr",
+              "legendFormat": "SMF",
+              "refId": "A"
+            }
+          ],
+          "title": "SMF Sessions",
+          "type": "stat"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 6,
+            "x": 12,
+            "y": 11
+          },
+          "id": 4,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "12.3.0",
+          "targets": [
+            {
+              "expr": "sum(fivegs_amffunction_rm_registeredsubnbr)",
+              "legendFormat": "Subscribers",
+              "refId": "A"
+            }
+          ],
+          "title": "Registered Subscribers",
+          "type": "stat"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 6,
+            "x": 18,
+            "y": 11
+          },
+          "id": 6,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "12.3.0",
+          "targets": [
+            {
+              "expr": "bearers_active",
+              "legendFormat": "Bearers",
+              "refId": "A"
+            }
+          ],
+          "title": "Active Bearers (SMF)",
+          "type": "stat"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 14
+          },
+          "id": 7,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.3.0",
+          "targets": [
+            {
+              "expr": "fivegs_amffunction_rm_reginitsucc",
+              "legendFormat": "Init Reg Success",
+              "refId": "A"
+            },
+            {
+              "expr": "fivegs_amffunction_rm_reginitfail",
+              "legendFormat": "Init Reg Fail",
+              "refId": "B"
+            },
+            {
+              "expr": "fivegs_amffunction_mm_paging5greq",
+              "legendFormat": "Paging Req",
+              "refId": "C"
+            }
+          ],
+          "title": "AMF Registration & Paging",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 14
+          },
+          "id": 8,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.3.0",
+          "targets": [
+            {
+              "expr": "fivegs_smffunction_sm_pdusessioncreationreq",
+              "legendFormat": "Requested",
+              "refId": "A"
+            },
+            {
+              "expr": "fivegs_smffunction_sm_pdusessioncreationsucc",
+              "legendFormat": "Success",
+              "refId": "B"
+            },
+            {
+              "expr": "fivegs_smffunction_sm_pdusessioncreationfail",
+              "legendFormat": "Failed",
+              "refId": "C"
+            }
+          ],
           "title": "SMF PDU Sessions",
-          "gridPos": {"h": 4,"w": 6,"x": 6,"y": 0},
-          "targets": [
-            { "expr": "sum(smf_pdu_session_count)", "legendFormat": "Sessions", "refId": "A" }
-          ]
+          "type": "timeseries"
         },
         {
-          "type": "stat",
-          "title": "UPF PFCP Sessions",
-          "gridPos": {"h": 4,"w": 6,"x": 12,"y": 0},
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 20
+          },
+          "id": 9,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.3.0",
           "targets": [
-            { "expr": "sum(upf_pfcp_session_count)", "legendFormat": "PFCP", "refId": "A" }
-          ]
-        },
-        {
-          "type": "timeseries",
-          "title": "UPF GTP-U Throughput",
-          "gridPos": {"h": 7,"w": 12,"x": 0,"y": 4},
-          "fieldConfig": { "defaults": {"unit": "bps"} },
-          "targets": [
-            { "expr": "sum(rate(upf_gtpu_bytes_total[5m]))", "legendFormat": "Total", "refId": "A" },
-            { "expr": "sum(rate(upf_gtpu_rx_bytes_total[5m]))", "legendFormat": "RX", "refId": "B" },
-            { "expr": "sum(rate(upf_gtpu_tx_bytes_total[5m]))", "legendFormat": "TX", "refId": "C" }
-          ]
-        },
-        {
-          "type": "timeseries",
-          "title": "SBI Request Rate (All NFs)",
-          "gridPos": {"h": 7,"w": 12,"x": 12,"y": 4},
-          "targets": [
-            { "expr": "sum(rate(sbi_requests_total[5m]))", "legendFormat": "req/s", "refId": "A" }
-          ]
-        },
-        {
-          "type": "stat",
-          "title": "Registered NFs (NRF)",
-          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 11},
-          "targets": [
-            { "expr": "sum(nrf_registered_nf_count)", "legendFormat": "NFs", "refId": "A" }
-          ]
-        },
-        {
-          "type": "gauge",
-          "title": "AMF NGAP Connections",
-          "gridPos": {"h": 4,"w": 6,"x": 6,"y": 11},
-          "targets": [
-            { "expr": "sum(amf_ngap_connections)", "legendFormat": "NGAP", "refId": "A" }
-          ]
-        },
-        {
-          "type": "stat",
-          "title": "SBI Errors (5xx)",
-          "gridPos": {"h": 4,"w": 6,"x": 12,"y": 11},
-          "targets": [
-            { "expr": "sum(rate(sbi_responses_total{code=~\"5..\"}[5m]))", "legendFormat": "errors/s", "refId": "A" }
-          ]
+            {
+              "expr": "fivegs_smffunction_sm_n4sessionreport",
+              "legendFormat": "SMF N4 Report Req",
+              "refId": "A"
+            },
+            {
+              "expr": "fivegs_smffunction_sm_n4sessionreportsucc",
+              "legendFormat": "SMF N4 Report Success",
+              "refId": "B"
+            }
+          ],
+          "title": "N4 Session Requests",
+          "type": "timeseries"
         }
-      ]
+      ],
+      "preload": false,
+      "refresh": "",
+      "schemaVersion": 42,
+      "tags": [
+        "open5gs",
+        "core",
+        "overview"
+      ],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-1h",
+        "to": "now"
+      },
+      "timepicker": {
+        "refresh_intervals": [
+          "5s",
+          "10s",
+          "30s",
+          "1m",
+          "5m",
+          "10m",
+          "30m",
+          "1h",
+          "2h",
+          "1d"
+        ]
+      },
+      "timezone": "browser",
+      "title": "Open5GS Core Overview",
+      "uid": "a114c770-5a53-451e-ae2b-65e057a9eb38",
+      "version": 1
     }
   amf-detail.json: |
     {
-      "title": "Open5GS AMF Detail",
+      "title": "Open5GS — AMF",
       "tags": ["open5gs","amf"],
+      "timezone": "browser",
       "schemaVersion": 38,
       "version": 1,
-      "refresh": "30s",
+      "refresh": "15s",
       "time": { "from": "now-6h", "to": "now" },
       "panels": [
         {
           "type": "stat",
-          "title": "UE Count",
-          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 0},
-          "targets": [{ "expr": "sum(amf_ue_count)", "refId": "A" }]
+          "title": "RAN UEs",
+          "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"],"fields":"","values":false}},
+          "targets": [{ "expr": "ran_ue", "legendFormat": "", "refId": "A" }]
         },
         {
+          "type": "stat",
+          "title": "AMF Sessions",
+          "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"],"fields":"","values":false}},
+          "targets": [{ "expr": "amf_session", "refId": "A" }]
+        },
+        {
+          "type": "stat",
+          "title": "gNodeBs",
+          "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"],"fields":"","values":false}},
+          "targets": [{ "expr": "gnb", "refId": "A" }]
+        },
+
+        {
           "type": "timeseries",
-          "title": "Registration Attempts/Success",
-          "gridPos": {"h": 7,"w": 12,"x": 6,"y": 0},
+          "title": "Registration Attempts vs Success (per second)",
+          "gridPos": {"h": 7, "w": 12, "x": 0, "y": 4},
+          "fieldConfig": {"defaults": {"unit": "req/s"}},
           "targets": [
-            { "expr": "sum(rate(amf_registration_attempts_total[5m]))", "legendFormat": "attempts", "refId": "A" },
-            { "expr": "sum(rate(amf_registration_success_total[5m]))", "legendFormat": "success", "refId": "B" }
+            { "expr": "sum(rate(fivegs_amffunction_rm_reginitreq[5m]))", "legendFormat": "attempts/s", "refId": "A" },
+            { "expr": "sum(rate(fivegs_amffunction_rm_reginitsucc[5m]))", "legendFormat": "success/s", "refId": "B" }
           ]
         },
         {
           "type": "timeseries",
-          "title": "SBI Latency (p95)",
-          "gridPos": {"h": 7,"w": 12,"x": 0,"y": 7},
-          "fieldConfig": { "defaults": {"unit": "ms"} },
+          "title": "Registration latency (p95)",
+          "gridPos": {"h": 7, "w": 12, "x": 12, "y": 4},
+          "fieldConfig": {"defaults": {"unit": "ms"}},
           "targets": [
-            { "expr": "histogram_quantile(0.95, sum by (le) (rate(amf_sbi_request_latency_seconds_bucket[5m])))", "legendFormat": "p95", "refId": "A" }
+            {
+              "expr": "histogram_quantile(0.95, sum by (le) (rate(fivegs_amffunction_rm_regtime_bucket[5m])))",
+              "legendFormat": "p95",
+              "refId": "A"
+            }
           ]
         },
         {
           "type": "timeseries",
-          "title": "NGAP Connections",
-          "gridPos": {"h": 7,"w": 12,"x": 12,"y": 7},
-          "targets": [{ "expr": "sum(amf_ngap_connections)", "refId": "A" }]
+          "title": "Auth Requests & Failures (per second)",
+          "gridPos": {"h": 6, "w": 12, "x": 0, "y": 11},
+          "fieldConfig": {"defaults": {"unit": "req/s"}},
+          "targets": [
+            { "expr": "sum(rate(fivegs_amffunction_amf_authreq[5m]))", "legendFormat": "auth req/s", "refId": "A" },
+            { "expr": "sum(rate(fivegs_amffunction_amf_authfail[5m]))", "legendFormat": "auth fail/s", "refId": "B" }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Registration Success Ratio (last 5m)",
+          "gridPos": {"h": 4, "w": 6, "x": 12, "y": 11},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"],"fields":"","values":false}},
+          "targets": [
+            {
+              "expr": "sum(rate(fivegs_amffunction_rm_reginitsucc[5m])) / (sum(rate(fivegs_amffunction_rm_reginitreq[5m])) OR vector(1))",
+              "legendFormat": "succ ratio",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {"defaults": {"unit": "percent"}}
+        },
+        {
+          "type": "barchart",
+          "title": "Registered subscribers by S-NSSAI",
+          "gridPos": {"h": 6, "w": 12, "x": 12, "y": 15},
+          "targets": [
+            {
+              "expr": "sum(fivegs_amffunction_rm_registeredsubnbr) by (snssai)",
+              "legendFormat": "{{snssai}}",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Configuration update rate (confupdate)",
+          "gridPos": {"h": 5, "w": 12, "x": 0, "y": 17},
+          "fieldConfig": {"defaults": {"unit": "req/s"}},
+          "targets": [
+            { "expr": "sum(rate(fivegs_amffunction_mm_confupdate[5m]))", "legendFormat": "confupdate/s", "refId": "A" }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Current Registered Subscriptions (total)",
+          "gridPos": {"h": 4, "w": 6, "x": 0, "y": 22},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"],"fields":"","values":false}},
+          "targets": [{ "expr": "sum(fivegs_amffunction_rm_registeredsubnbr)", "refId": "A" }]
+        },
+        {
+          "type": "timeseries",
+          "title": "Process CPU (rate)",
+          "gridPos": {"h": 5, "w": 12, "x": 12, "y": 22},
+          "fieldConfig": {"defaults": {"unit": "ops"}},
+          "targets": [
+            { "expr": "rate(process_cpu_seconds_total[5m])", "legendFormat": "cpu secs/s", "refId": "A" }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Resident Memory (bytes)",
+          "gridPos": {"h": 4, "w": 6, "x": 6, "y": 22},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"],"fields":"","values":false}},
+          "targets": [{ "expr": "process_resident_memory_bytes", "refId": "A" }],
+          "fieldConfig": {"defaults": {"unit": "bytes"}}
+        },
+        {
+          "type": "stat",
+          "title": "Open FDs",
+          "gridPos": {"h": 4, "w": 6, "x": 18, "y": 22},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"],"fields":"","values":false}},
+          "targets": [{ "expr": "process_open_fds", "refId": "A" }]
+        },
+        {
+          "type": "timeseries",
+          "title": "Selected Counters (auth/reg) — cumulative",
+          "gridPos": {"h": 5, "w": 24, "x": 0, "y": 26},
+          "fieldConfig": {"defaults": {"unit": "none"}},
+          "targets": [
+            { "expr": "sum(fivegs_amffunction_amf_authreq)", "legendFormat": "auth req (total)", "refId": "A" },
+            { "expr": "sum(fivegs_amffunction_amf_authfail)", "legendFormat": "auth fail (total)", "refId": "B" },
+            { "expr": "sum(fivegs_amffunction_rm_reginitreq)", "legendFormat": "reg attempts (total)", "refId": "C" },
+            { "expr": "sum(fivegs_amffunction_rm_reginitsucc)", "legendFormat": "reg success (total)", "refId": "D" }
+          ]
         }
       ]
     }
   smf-detail.json: |
     {
-      "title": "Open5GS SMF Detail",
+      "title": "Open5GS — SMF",
       "tags": ["open5gs","smf"],
+      "timezone": "browser",
       "schemaVersion": 38,
       "version": 1,
-      "refresh": "30s",
+      "refresh": "15s",
       "time": { "from": "now-6h", "to": "now" },
       "panels": [
         {
           "type": "stat",
-          "title": "PDU Session Count",
-          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 0},
-          "targets": [{ "expr": "sum(smf_pdu_session_count)", "refId": "A" }]
+          "title": "Active UEs",
+          "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"]}},
+          "targets": [{"expr": "ues_active", "refId": "A"}]
         },
-        {
-          "type": "timeseries",
-          "title": "SBI Request Rate",
-          "gridPos": {"h": 7,"w": 12,"x": 6,"y": 0},
-          "targets": [{ "expr": "sum(rate(smf_sbi_requests_total[5m]))", "legendFormat": "req/s", "refId": "A" }]
-        },
-        {
-          "type": "timeseries",
-          "title": "SBI Errors (4xx/5xx)",
-          "gridPos": {"h": 7,"w": 12,"x": 0,"y": 7},
-          "targets": [
-            { "expr": "sum(rate(smf_sbi_responses_total{code=~\"4..\"}[5m]))", "legendFormat": "4xx", "refId": "A" },
-            { "expr": "sum(rate(smf_sbi_responses_total{code=~\"5..\"}[5m]))", "legendFormat": "5xx", "refId": "B" }
-          ]
-        }
-      ]
-    }
-  upf-detail.json: |
-    {
-      "title": "Open5GS UPF Detail",
-      "tags": ["open5gs","upf"],
-      "schemaVersion": 38,
-      "version": 1,
-      "refresh": "15s",
-      "time": { "from": "now-1h", "to": "now" },
-      "panels": [
         {
           "type": "stat",
-          "title": "PFCP Session Count",
-          "gridPos": {"h": 4,"w": 6,"x": 0,"y": 0},
-          "targets": [{ "expr": "sum(upf_pfcp_session_count)", "refId": "A" }]
+          "title": "Active Sessions",
+          "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"]}},
+          "targets": [{"expr": "fivegs_smffunction_sm_sessionnbr", "refId": "A"}]
+        },
+        {
+          "type": "stat",
+          "title": "Active Bearers",
+          "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"]}},
+          "targets": [{"expr": "bearers_active", "refId": "A"}]
+        },
+        {
+          "type": "stat",
+          "title": "Active PDP Contexts",
+          "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"]}},
+          "targets": [{"expr": "gtp1_pdpctxs_active", "refId": "A"}]
         },
         {
           "type": "timeseries",
-          "title": "GTP-U Throughput",
-          "gridPos": {"h": 8,"w": 12,"x": 6,"y": 0},
-          "fieldConfig": { "defaults": {"unit": "bps"} },
+          "title": "PDU Session Creation Requests vs Success",
+          "gridPos": {"h": 6, "w": 12, "x": 0, "y": 4},
+          "fieldConfig": {"defaults": {"unit": "req/s"}},
           "targets": [
-            { "expr": "sum(rate(upf_gtpu_bytes_total[1m]))", "legendFormat": "Total", "refId": "A" },
-            { "expr": "sum(rate(upf_gtpu_rx_bytes_total[1m]))", "legendFormat": "RX", "refId": "B" },
-            { "expr": "sum(rate(upf_gtpu_tx_bytes_total[1m]))", "legendFormat": "TX", "refId": "C" }
+            { "expr": "sum(rate(fivegs_smffunction_sm_pdusessioncreationreq[5m]))", "legendFormat": "requested", "refId": "A" },
+            { "expr": "sum(rate(fivegs_smffunction_sm_pdusessioncreationsucc[5m]))", "legendFormat": "successful", "refId": "B" }
           ]
         },
         {
           "type": "timeseries",
-          "title": "Packets (RX/TX)",
-          "gridPos": {"h": 8,"w": 12,"x": 0,"y": 8},
+          "title": "N4 Session Reports Requested vs Success",
+          "gridPos": {"h": 6, "w": 12, "x": 12, "y": 4},
+          "fieldConfig": {"defaults": {"unit": "req/s"}},
           "targets": [
-            { "expr": "sum(rate(upf_gtpu_rx_packets_total[1m]))", "legendFormat": "RX pkts/s", "refId": "A" },
-            { "expr": "sum(rate(upf_gtpu_tx_packets_total[1m]))", "legendFormat": "TX pkts/s", "refId": "B" }
+            { "expr": "sum(rate(fivegs_smffunction_sm_n4sessionreport[5m]))", "legendFormat": "requested", "refId": "A" },
+            { "expr": "sum(rate(fivegs_smffunction_sm_n4sessionreportsucc[5m]))", "legendFormat": "success", "refId": "B" }
           ]
+        },
+        {
+          "type": "barchart",
+          "title": "Active Sessions per S-NSSAI",
+          "gridPos": {"h": 6, "w": 12, "x": 0, "y": 10},
+          "targets": [
+            { "expr": "sum(fivegs_smffunction_sm_sessionnbr) by (snssai)", "legendFormat": "{{snssai}}", "refId": "A" }
+          ]
+        },
+        {
+          "type": "barchart",
+          "title": "QoS Flows per S-NSSAI",
+          "gridPos": {"h": 6, "w": 12, "x": 12, "y": 10},
+          "targets": [
+            { "expr": "sum(fivegs_smffunction_sm_qos_flow_nbr) by (snssai,fiveqi)", "legendFormat": "{{snssai}}-{{fiveqi}}", "refId": "A" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "GTP Messages Received (per second)",
+          "gridPos": {"h": 6, "w": 12, "x": 0, "y": 16},
+          "fieldConfig": {"defaults": {"unit": "req/s"}},
+          "targets": [
+            { "expr": "sum(rate(gn_rx_createpdpcontextreq[5m]))", "legendFormat": "CreatePDPReq", "refId": "A" },
+            { "expr": "sum(rate(gn_rx_deletepdpcontextreq[5m]))", "legendFormat": "DeletePDPReq", "refId": "B" },
+            { "expr": "sum(rate(s5c_rx_createsession[5m]))", "legendFormat": "CreateSession", "refId": "C" },
+            { "expr": "sum(rate(s5c_rx_deletesession[5m]))", "legendFormat": "DeleteSession", "refId": "D" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "GTP Message Parse Failures",
+          "gridPos": {"h": 5, "w": 12, "x": 12, "y": 16},
+          "fieldConfig": {"defaults": {"unit": "req/s"}},
+          "targets": [
+            { "expr": "sum(rate(gn_rx_parse_failed[5m])) + sum(rate(gtp_node_gn_rx_parse_failed[5m]))", "legendFormat": "GTPv1 Parse Fail", "refId": "A" },
+            { "expr": "sum(rate(s5c_rx_parse_failed[5m])) + sum(rate(gtp_node_s5c_rx_parse_failed[5m]))", "legendFormat": "GTPv2 Parse Fail", "refId": "B" }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Active GTPv2 Sessions",
+          "gridPos": {"h": 4, "w": 6, "x": 0, "y": 22},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"]}},
+          "targets": [{"expr": "gtp2_sessions_active", "refId": "A"}]
+        },
+        {
+          "type": "stat",
+          "title": "Active GTP Peers",
+          "gridPos": {"h": 4, "w": 6, "x": 6, "y": 22},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"]}},
+          "targets": [{"expr": "gtp_peers_active", "refId": "A"}]
+        },
+        {
+          "type": "stat",
+          "title": "Resident Memory",
+          "gridPos": {"h": 4, "w": 6, "x": 12, "y": 22},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"]}},
+          "targets": [{"expr": "process_resident_memory_bytes", "refId": "A"}],
+          "fieldConfig": {"defaults":{"unit":"bytes"}}
+        },
+        {
+          "type": "stat",
+          "title": "Open FDs",
+          "gridPos": {"h": 4, "w": 6, "x": 18, "y": 22},
+          "options": {"reduceOptions":{"calcs":["lastNotNull"]}},
+          "targets": [{"expr": "process_open_fds", "refId": "A"}]
+        },
+        {
+          "type": "timeseries",
+          "title": "CPU Usage Rate",
+          "gridPos": {"h": 5, "w": 12, "x": 0, "y": 26},
+          "fieldConfig": {"defaults":{"unit":"ops"}},
+          "targets": [{"expr":"rate(process_cpu_seconds_total[5m])","legendFormat":"cpu secs/s","refId":"A"}]
         }
       ]
     }
   logs.json: |
     {
-      "title": "Open5GS Logs",
-      "tags": ["open5gs","logs"],
-      "schemaVersion": 38,
-      "version": 1,
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 6,
+      "links": [],
       "panels": [
         {
-          "type": "logs",
-          "title": "Namespace default pods (Open5GS)",
-          "gridPos": {"h": 15,"w": 24,"x": 0,"y": 0},
+          "datasource": {
+            "type": "loki",
+            "uid": "P982945308D3682D1"
+          },
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 15,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 1,
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": false,
+            "enableLogDetails": true,
+            "showControls": false,
+            "showTime": false,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "pluginVersion": "12.3.0",
           "targets": [
-            { "refId": "A", "datasource": { "type": "loki", "uid": "Loki" },
-              "query": "{namespace=\"default\"} |= \"open5gs\"" }
-          ]
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "P982945308D3682D1"
+              },
+              "direction": "backward",
+              "editorMode": "builder",
+              "expr": "{namespace=\"open5gs\"} |= ``",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Namespace default pods (Open5GS)",
+          "type": "logs"
         }
-      ]
+      ],
+      "preload": false,
+      "refresh": "",
+      "schemaVersion": 42,
+      "tags": [
+        "open5gs",
+        "logs"
+      ],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "Open5GS Logs",
+      "uid": "234aa8c6-fb32-4566-91b5-3cc3d405e325",
+      "version": 1
     }

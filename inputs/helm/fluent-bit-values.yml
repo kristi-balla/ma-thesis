@@ -47,12 +47,6 @@ config:
 
   outputs: |
     [OUTPUT]
-        Name file
-        Match kube.*
-        Path /var/log/cluster-logs/
-        File default.log
-
-    [OUTPUT]
         Name        loki
         Match       kube.*
         Host        loki.monitoring.svc.cluster.local

@@ -5,28 +5,35 @@ alertmanager:
 ##
 grafana:
   enabled: true
+  # i don't want any source as default that i didn't set!
+  forceDeployDatasources: false
   ## Timezone for the default dashboards
   ## Other options are: browser or a specific timezone, i.e. Europe/Luxembourg
   ##
   defaultDashboardsTimezone: browser
 
+  # use NodePort for stability!
+  # port-forwarding crashes every now and then
+  service:
+    type: NodePort
+    nodePort: 30000
+
   # Administrator credentials when not using an existing secret (see below)
   adminUser: admin
   adminPassword: admin
 
-  ## Configure additional grafana datasources (passed through tpl)
-  ## ref: https://grafana.com/docs/grafana/latest/administration/provisioning/#datasources
-  additionalDataSources:
-    - name: Prometheus
-      type: prometheus
-      access: proxy
-      url: http://kps-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
-      isDefault: false
-    - name: Loki
-      type: loki
-      access: proxy
-      isDefault: false
-      url: http://loki.monitoring.svc.cluster.local:3100
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://kps-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+          access: proxy
+        - name: loki
+          type: loki
+          url: http://loki.monitoring.svc.cluster.local:3100
+          editable: false
 
   dashboardsProvider:
     enabled: true
@@ -42,6 +49,8 @@ grafana:
           path: /var/lib/grafana/dashboards/open5gs
 
   sidecar:
+    datasources:
+      enabled: false
     dashboards:
       enabled: true
       label: grafana_dashboard
@@ -53,5 +62,3 @@ prometheus:
     # i am too lazy for label filtering, so I just let prometheus discover
     # every service monitor in its namespace
     serviceMonitorSelectorNilUsesHelmValues: false
-# TODO: figure out how to configure 5G application. Main goal is to build something configurable!
-# can also have something behind the 5g netw that generates traffic!
