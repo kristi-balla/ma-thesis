@@ -40,7 +40,7 @@
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
 %
-\author{Kristi Balla\inst{1}\orcidID{0009-0009-8610-062X}}
+\author{Kristi Balla\inst{1}}
 %
 \authorrunning{Kristi Balla Thesis Proposal}
 % First names are abbreviated in the running head.
@@ -64,7 +64,7 @@ They are deployed on container orchestration platforms such as \ks.
 Such systems have become the backbone of modern software infrastructures \cite{cloud_native}. 
 This is due to their advantages such as flexibility, scalability, and rapid deployments. 
 % 2. mention what can be deployed in cloud-native: among them are 5G systems! 
-Such advantages were also recognized by 5G network systems.
+Such advantages were also recognized by the architects of 5G network systems.
 The core of these networks was designed to be cloud-native. 
 Thus network functions (NFs) are now containerized \cite{3gpp_ts_23501_rel18}. 
 % 3. what are the disadvantages
@@ -74,50 +74,74 @@ Processing the distributed data can take a significant amount of time and be err
 This calls for an automatic solution, or Automatic Root Cause Analysis (ARCA).
 
 % mention that AI can help with parsing large amounts of information
-Large language models (LLMs) are particularly good at dealing with big amounts of text \cite{naveed2025comprehensive}. There are many free models to choose from, all focusing on different kinds of tasks. However, since they were trained on generic data \cite{kasneci2023chatgpt}, they usually lack the context to understand the relationships of different NFs in a 5G setting.
+A recent development good at dealing with big amounts of text are Large Language Models (LLMs) \cite{naveed2025comprehensive}. 
+There are many free models to choose from, all focusing on different kinds of tasks. 
+However, since they were trained on generic data \cite{kasneci2023chatgpt}, they usually lack the context to understand the relationships of different NFs in a 5G setting.
 
 % state your research questions you want to explore in this thesis
 % smth smth which open-source model is most correct when pinpointing issues
 % smth smth which model can properly explain why they came to that conclusion
-Thus, this thesis focuses using LLMs for ARCA of anomalies that occur in cloud-native systems, focusing on a 5G core implementation. The following research questions will be answered:
+Thus, this thesis focuses using LLMs for ARCA of anomalies that occur in cloud-native systems, focusing on a 5G core implementation. The following research question will be answered:
+
+% TODO: ask about keeping these research questions, OR setting up 1 research question with mutliple hypothesis (later to be defined in the thesis)
 
 \begin{description}
     \item[Q1] Can chaos engineering be leveraged to improve the accuracy of LLMs when used for ARCA?
-    \item[Q2] How does the quantity of contextual input affect the output quality of LLMs?
-    \item[Q3] Which model is most reliable for explaining the clues that led to its decision?
+    % \item[Q2] How does the quantity of contextual input affect the output quality of LLMs?
+    % \item[Q3] Which of the selected models is most reliable for explaining the clues that led to its decision?
 \end{description}
 
 \section{Goals}
-% TODO: restructure to mention 5G and that you're focusing more on the application and the services themselves than the k8s backbone
-% this is the objectives part Boyan spoke of
-To answer the research questions, the following milestones need to be achieved.
-
-% you want to firstly create an observable application following the 3 pillars of observability
-First, a cluster with an appropriate log sink. Logs are to be enriched with other \ks\space metadata. The result will be used to define the stable state of the cluster.
+First, a cluster with a log sink will be configured.
+Application-specific logs convey more information about faults than the underlying runtime.
+Those logs will be enriched with other \ks\space metadata, such as namespace, and pod name.
+Furthermore, service metrics will be collected where available.
+The result will be used to define the stable state of the cluster.
 
 % then a stable state definition for chaos engineering --> create the chaos and label it
 % for that, you'll have to think about some attack scenarios!!
-Second, a definition of attack scenarios. Those will be used to engineer chaos into the cluster and have it diverge from its stable state. The chaos faults will focus on the application itself, as well as the underlying infrastructure. They aim to disrupt the normal flow of NFs and induce a large number of failures. The observed behavior will be fed into the LLMs for the next step.
+Second, a definition of attack scenarios.
+Those will be used to engineer chaos into the cluster and have it diverge from its stable state.
+The chaos faults will focus on the application itself, as well as the underlying infrastructure.
+They aim to disrupt the flow of NFs and induce failures.
+The observed behavior will be fed into the LLMs for the next step.
 
-% throw SVM/forest classifier at it to initially say if there is a problem at all
-% then baseline AI with a very naive prompt
+% baseline AI with a very naive prompt
 % then do some prompt engineering for different open-source models
 % then do RAG for efficiency
-Third, a baseline for LLM response accuracy. For this, the LLMs shall initially be naively prompted. The baseline includes metrics such as accuracy, precision, recall, F1, human agreement score, and faithfulness. Then, more advanced prompt engineering will be investigated. In addition, older, potentially synthetic precedents could help LLMs make a more informed decision. Thus, retrieval augmented generation (RAG) will also be examined.
+Third, a baseline for LLM response accuracy. 
+For this, the LLMs shall initially be naively prompted. 
+The baseline includes metrics such as accuracy, precision, recall, F1, human agreement score, and faithfulness. 
+Then, more advanced prompt engineering will be investigated. 
+In addition, older, potentially synthetic precedents could help LLMs make a more informed decision. 
+Thus, retrieval augmented generation (RAG) will also be examined.
 
 % project should be presented as a one-click-solution: just plug it in your cluster and hit detect or smth
-Optionally, the work should be presented as a one-click solution. The implementation could include a GUI or a chatbot, depending on the amount of time left.
+Optionally, the work should be presented as a one-click solution. 
+The implementation could include a GUI or a chatbot, depending on the amount of time left.
 
 \section{Experimental Setup}
 % TODO: mention tools for chaos engineering!
 % Mention you'll spin up a cluster on (chair infra, AWS, Azure, GCP, Telekom Infra) and run your experiments against it
-This work foresees reproducibly spinning up multi-node \ks\space clusters to generate the data. Since AI workloads are intended, at least a machine with GPU access is required. The data from logs will be collected for further processing. This includes correlation and labeling. Then, a request will be made to the model running in \href{https://ollama.com/search}{Ollama}. The models for this thesis will be hand-picked from there.
+This work foresees spinning up multi-node \ks\space clusters to generate the data. 
+Since AI workloads are intended, at least a machine with GPU access is required. 
+The data from logs will be collected for further processing. 
+This includes correlation and labeling. 
+Then, a request will be made to the model running in \href{https://ollama.com/search}{Ollama}. 
+The models for this thesis will be hand-picked from there.
 
-The application to be deployed is \href{https://open5gs.org/}{Open5Gs}. This was chosen due to its straight-forward setup guide, extensive documentation, as well as high configurability. \href{https://fluentbit.io/}{FluentBit} will parse application logs and send them to a \href{https://grafana.com/docs/loki/latest/}{Loki} backend. \href{https://prometheus.io/}{Prometheus} will scrape service metrics and \href{https://grafana.com/}{Grafana} will display all this information in a dashboard. \href{https://docs.litmuschaos.io/}{Litmus Chaos} will be used to inject errors.
+The application to be deployed is \href{https://open5gs.org/}{Open5Gs}. 
+This was chosen due to its straight-forward setup guide, extensive documentation, as well as high configurability. 
+\href{https://fluentbit.io/}{FluentBit} will parse application logs and send them to a \href{https://grafana.com/docs/loki/latest/}{Loki} backend. 
+\href{https://prometheus.io/}{Prometheus} will scrape service metrics and \href{https://grafana.com/}{Grafana} will display all this information in a dashboard. 
+\href{https://docs.litmuschaos.io/}{Litmus Chaos} will be used to inject errors.
 
 \section{Timeline}
 
-Figure \ref{fig:gantt-chart} depicts a proposed timeline for this thesis, aiming to start on 01.02. and be submitted on 01.08.. While task duration was estimated generously, there still is a buffer of one week for unforeseen circumstances. 38 days were allocated to writing the thesis itself. However, writing will be a continuous process occurring after each milestone to guarantee short feedback loops.
+Figure \ref{fig:gantt-chart} depicts a proposed timeline for this thesis, aiming to start on 01.02. and be submitted on 01.08.. 
+While task duration was estimated generously, there still is a buffer of one week for unforeseen circumstances. 
+38 days were allocated to writing the thesis itself. 
+However, writing will be a continuous process occurring after each milestone to guarantee short feedback loops.
 
 \begin{figure}[!h]
     \centering
@@ -161,11 +185,11 @@ Figure \ref{fig:gantt-chart} depicts a proposed timeline for this thesis, aiming
             \ganttbar{Buffer / Review}{2026-07-23}{2026-08-01}
         \end{ganttchart}
     }
-    \caption{Proposed timeline for the thesis. The vertical grid-lines are one week apart from each-other.}
+    \caption{Proposed timeline for the thesis. 
+    The vertical grid-lines are one week apart from each-other.
+    The timeline starts in January and extends to beyond August for aesthetic reasons.}
     \label{fig:gantt-chart}
 \end{figure}
-
-% TODO: academic language, NOT casual
 
 %
 % ---- Bibliography ----
