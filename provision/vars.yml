@@ -6,12 +6,11 @@ versions:
   minikube: 1.37.0
   kubectl: 1.34.0
   uv: 0.9.8
+  litmusctl: 1.18.0
 
 users_and_groups:
   - user: vagrant
     group: docker
-  - user: vagrant
-    group: microk8s
 
 apt_packages:
   - git
@@ -39,9 +38,6 @@ apt_packages:
   - iperf3
   - tcpdump
 
-snap_packages:
-  - microk8s
-
 curl_packages:
   - link: https://dl.k8s.io/release/v{{ versions.kubectl }}/bin/linux/amd64/kubectl
     filename: kubectl
@@ -57,3 +53,8 @@ zips:
     unpack_dir: "/tmp"
     tool_path: "/tmp/uv-x86_64-unknown-linux-gnu/uv"
     binary: "uv"
+  - url: "https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-{{ versions.litmusctl }}.tar.gz"
+    dest: "/tmp/litmusctl-linux-amd64-{{ versions.litmusctl }}.tar.gz"
+    unpack_dir: "/tmp"
+    tool_path: "/tmp/litmusctl"
+    binary: "litmusctl"

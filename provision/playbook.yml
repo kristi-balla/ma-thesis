@@ -54,18 +54,18 @@
         mode: "0755"
       loop:
         - /usr/local/bin
-        - /opt/cni/bin/
+        # - /opt/cni/bin/
 
-    - name: Curl packages
-      become: true
-      ansible.builtin.get_url:
-        url: "{{ item.link }}"
-        dest: "/usr/local/bin/{{ item.filename }}"
-        mode: "0755"
-        force: true
-      loop: "{{ curl_packages }}"
-      retries: 5
-      delay: 5
+    # - name: Curl packages
+    #   become: true
+    #   ansible.builtin.get_url:
+    #     url: "{{ item.link }}"
+    #     dest: "/usr/local/bin/{{ item.filename }}"
+    #     mode: "0755"
+    #     force: true
+    #   loop: "{{ curl_packages }}"
+    #   retries: 5
+    #   delay: 5
 
     - name: Download ZIP tarball
       ansible.builtin.get_url:

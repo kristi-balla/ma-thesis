@@ -1,0 +1,22 @@
+crds:
+  # it only creates chaosexperiment, chaosengine and chaosresult
+  # those are already created by the core!
+  create: false
+
+LITMUS_URL: http://portal-litmus-frontend-service.litmus.svc.cluster.local:9091
+LITMUS_BACKEND_URL: http://portal-litmus-frontend-service.litmus.svc.cluster.local:9002
+
+enablePreInstallJob: false
+
+useExistingHookSecret: true
+useExistingInfraSecret: true
+useExistingInfraConfigMap: true
+useExistingWorkflowControllerConfigMap: true
+
+event-tracker:
+  # seems to be needed for the UI, not actually running experiments
+  enabled: false
+
+subscriber:
+  # seems to be needed for the UI, not actually running experiments
+  enabled: false
