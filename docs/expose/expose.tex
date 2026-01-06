@@ -86,7 +86,7 @@ Thus, this thesis focuses using LLMs for ARCA of anomalies that occur in cloud-n
 % TODO: ask about keeping these research questions, OR setting up 1 research question with mutliple hypothesis (later to be defined in the thesis)
 
 \begin{description}
-    \item[Q1] Can chaos engineering be leveraged to improve the accuracy of LLMs when used for ARCA?
+    \item[Q1] Can chaos engineering be leveraged to improve the response quality of LLMs when used for ARCA?
     % \item[Q2] How does the quantity of contextual input affect the output quality of LLMs?
     % \item[Q3] Which of the selected models is most reliable for explaining the clues that led to its decision?
 \end{description}
@@ -102,7 +102,7 @@ The result will be used to define the stable state of the cluster.
 % for that, you'll have to think about some attack scenarios!!
 Second, a definition of attack scenarios.
 Those will be used to engineer chaos into the cluster and have it diverge from its stable state.
-The chaos faults will focus on the application itself, as well as the underlying infrastructure.
+The chaos faults will focus on the 5G core system itself, as well as the underlying infrastructure.
 They aim to disrupt the flow of NFs and induce failures.
 The observed behavior will be fed into the LLMs for the next step.
 
@@ -121,7 +121,6 @@ Optionally, the work should be presented as a one-click solution.
 The implementation could include a GUI or a chatbot, depending on the amount of time left.
 
 \section{Experimental Setup}
-% TODO: mention tools for chaos engineering!
 % Mention you'll spin up a cluster on (chair infra, AWS, Azure, GCP, Telekom Infra) and run your experiments against it
 This work foresees spinning up multi-node \ks\space clusters to generate the data. 
 Since AI workloads are intended, at least a machine with GPU access is required. 

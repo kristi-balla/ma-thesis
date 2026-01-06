@@ -28,8 +28,7 @@ Every config, dependency, version, and tool will be noted down here.
 - docker-buildx-plugin
 - docker-compose-plugin
 
-<!-- TODO: investigate whether this works on their latest versions!
-They only tried it with v1.28, but that is old! -->
+<!-- Their solution only works with k8s v1.28, which is old -->
 - kubectl
 - kubelet
 - kubeadm
@@ -249,7 +248,6 @@ metadata:
   labels:
     app.kubernetes.io/name: mongodb
 spec:
-  # TODO: consider setting clusterIP: none to fascilitate communication to sts
   type: ClusterIP
   ports:
     - name: mongodb

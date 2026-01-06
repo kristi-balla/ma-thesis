@@ -40,4 +40,4 @@ This is a typical chaos run from my understanding.
 
 ## Extracting the Data
 
-<!-- TODO: you still need to figure out how to extract everything -->
+<!-- TODO: you still need to figure out how to extract the logs from loki -->
