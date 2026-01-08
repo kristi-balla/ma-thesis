@@ -183,6 +183,22 @@ Appearently, the node is very sensitive to changes.
 Globally Unique AMF Identifier.
 It consists of PLMN ID, AMF Region ID, AMF Set ID, AMF Pointer.
 
+### TAI
+
+Tracking Area Identity.
+It identifies a Tracking Area in the mobile network.
+A Tracking Area (TA) is a group of cells (gNBs in 5G) used to track UE mobility efficiently.
+UE only needs to inform the network when it moves from one TA to another, not every cell.
+Reduces signaling overhead for mobility.
+Helps the network know where to page the UE (e.g., for incoming calls, SMS).
+
+###  PFCP
+
+Packet Forwarding Control Protocol.
+A UDP-based protocol used by the SMF to talk to the UPF.
+For this, it needs to know the exact IP of the UPF service.
+UPFs can initiate PFCP association requests to the SMF on an interface configured in the `server` section.
+
 ## Misc
 
 ### UE
